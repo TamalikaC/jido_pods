@@ -173,6 +173,7 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #endif
 #if __has_feature(modules)
 @import ObjectiveC;
+@import SceneKit;
 #endif
 
 #pragma clang diagnostic ignored "-Wproperty-attribute-mismatch"
@@ -187,6 +188,10 @@ SWIFT_MODULE_NAMESPACE_PUSH("MapsyncLib")
 
 SWIFT_CLASS("_TtC10MapsyncLib12MapsyncAsset")
 @interface MapsyncAsset : NSObject
+@property (nonatomic, copy) NSString * _Nonnull assetID;
+@property (nonatomic) SCNVector3 position;
+@property (nonatomic) float orientation;
+- (nonnull instancetype)init:(NSString * _Nonnull)_assetID :(SCNVector3)_position :(float)_orientation OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 @end
 
