@@ -2,11 +2,12 @@
 //  MapsyncLib.h
 //  MapsyncLib
 //
-//  Created by Jaeyong Sung on 1/17/18.
-//  Copyright © 2018 Mapsync. All rights reserved.
+//  Created by Stauber on 1/12/18.
+//  Copyright © 2018 Stauber. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
 //! Project version number for MapsyncLib.
 FOUNDATION_EXPORT double MapsyncLibVersionNumber;
