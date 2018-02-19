@@ -186,43 +186,41 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 
 SWIFT_MODULE_NAMESPACE_PUSH("MapsyncLib")
 
-SWIFT_CLASS("_TtC10MapsyncLib12MapsyncAsset")
-@interface MapsyncAsset : NSObject
+SWIFT_CLASS("_TtC10MapsyncLib8MapAsset")
+@interface MapAsset : NSObject
 @property (nonatomic, copy) NSString * _Nonnull assetID;
 @property (nonatomic) SCNVector3 position;
 @property (nonatomic) float orientation;
-- (nonnull instancetype)init:(NSString * _Nonnull)assetID :(SCNVector3)position :(float)orientation OBJC_DESIGNATED_INITIALIZER;
+@property (nonatomic) float confidence;
+- (nonnull instancetype)init:(NSString * _Nonnull)assetID :(SCNVector3)position :(float)orientation;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 @end
 
-typedef SWIFT_ENUM(NSInteger, MapsyncMode) {
-  MapsyncModeUnknown = 0,
-  MapsyncModeMapping = 1,
-  MapsyncModeLocalization = 2,
+typedef SWIFT_ENUM(NSInteger, MapMode) {
+  MapModeUnknown = 0,
+  MapModeMapping = 1,
+  MapModeLocalization = 2,
 };
 
 @class ARSession;
-enum MapsyncStatus : NSInteger;
+enum MapStatus : NSInteger;
 @class ARFrame;
 @class ARSCNView;
 
-SWIFT_CLASS("_TtC10MapsyncLib14MapsyncSession")
-@interface MapsyncSession : NSObject
-@property (nonatomic, readonly) enum MapsyncMode mapsyncSessionMode;
+SWIFT_CLASS("_TtC10MapsyncLib10MapSession")
+@interface MapSession : NSObject
+@property (nonatomic, readonly) enum MapMode mapSessionMode;
 @property (nonatomic, readonly, copy) NSString * _Nonnull mapID;
 @property (nonatomic, readonly, copy) NSString * _Nonnull userID;
-@property (nonatomic, readonly, copy) NSString * _Nonnull appID;
-- (nonnull instancetype)initWithArSession:(ARSession * _Nonnull)arSession mapsyncMode:(enum MapsyncMode)mapsyncMode appID:(NSString * _Nonnull)appID userID:(NSString * _Nonnull)userID mapID:(NSString * _Nonnull)mapID statusCallback:(void (^ _Nonnull)(enum MapsyncStatus))statusCallback OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithArSession:(ARSession * _Nonnull)arSession mapMode:(enum MapMode)mapMode userID:(NSString * _Nonnull)userID mapID:(NSString * _Nonnull)mapID developerKey:(NSString * _Nonnull)developerKey assetsFoundCallback:(void (^ _Nonnull)(NSArray<MapAsset *> * _Nonnull))assetsFoundCallback statusCallback:(void (^ _Nonnull)(enum MapStatus))statusCallback OBJC_DESIGNATED_INITIALIZER;
 - (void)updateWithFrame:(ARFrame * _Nonnull)frame;
-- (void)uploadMapWithCallback:(void (^ _Nonnull)(BOOL))callback;
-- (void)storePlacementWithAssets:(NSArray<MapsyncAsset *> * _Nonnull)assets callback:(void (^ _Nonnull)(BOOL))callback;
-- (void)reloadAssetsWithCallback:(void (^ _Nonnull)(NSArray<MapsyncAsset *> * _Nonnull))callback;
+- (BOOL)storePlacementWithAssets:(NSArray<MapAsset *> * _Nonnull)assets callback:(void (^ _Nonnull)(BOOL))callback SWIFT_WARN_UNUSED_RESULT;
 - (void)resetWithSceneView:(ARSCNView * _Nonnull)sceneView;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 @end
 
 
-@interface MapsyncSession (SWIFT_EXTENSION(MapsyncLib))
+@interface MapSession (SWIFT_EXTENSION(MapsyncLib))
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class) float CONFIDENCE_THRESHOLD;)
 + (float)CONFIDENCE_THRESHOLD SWIFT_WARN_UNUSED_RESULT;
 + (void)setCONFIDENCE_THRESHOLD:(float)value;
@@ -234,13 +232,15 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class) BOOL USE_BETA_ALGO;)
 + (void)setUSE_BETA_ALGO:(BOOL)value;
 @end
 
-typedef SWIFT_ENUM(NSInteger, MapsyncStatus) {
-  MapsyncStatusInitialized = 0,
-  MapsyncStatusNetworkFailure = 1,
-  MapsyncStatusServerError = 2,
-  MapsyncStatusLocalizationError = 3,
-  MapsyncStatusNoMapFound = 4,
-  MapsyncStatusNoAssetFound = 5,
+typedef SWIFT_ENUM(NSInteger, MapStatus) {
+  MapStatusInitialized = 0,
+  MapStatusNoMapFound = 1,
+  MapStatusNetworkFailure = 2,
+  MapStatusAuthenticationError = 3,
+  MapStatusServerError = 4,
+  MapStatusLocalizationTimeout = 5,
+  MapStatusLocalizationError = 6,
+  MapStatusNoAssetFound = 7,
 };
 
 SWIFT_MODULE_NAMESPACE_POP
