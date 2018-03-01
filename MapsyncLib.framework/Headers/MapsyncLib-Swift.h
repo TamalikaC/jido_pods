@@ -215,7 +215,7 @@ SWIFT_CLASS("_TtC10MapsyncLib10MapSession")
 - (nonnull instancetype)initWithArSession:(ARSession * _Nonnull)arSession mapMode:(enum MapMode)mapMode userID:(NSString * _Nonnull)userID mapID:(NSString * _Nonnull)mapID developerKey:(NSString * _Nonnull)developerKey assetsFoundCallback:(void (^ _Nonnull)(NSArray<MapAsset *> * _Nonnull))assetsFoundCallback statusCallback:(void (^ _Nonnull)(enum MapStatus))statusCallback OBJC_DESIGNATED_INITIALIZER;
 - (void)updateWithFrame:(ARFrame * _Nonnull)frame;
 - (BOOL)storePlacementWithAssets:(NSArray<MapAsset *> * _Nonnull)assets callback:(void (^ _Nonnull)(BOOL))callback SWIFT_WARN_UNUSED_RESULT;
-- (void)listNearbyMapsWithUserID:(NSString * _Nullable)userID longitude:(double)longitude latitude:(double)latitude longitudeDelta:(double)longitudeDelta latitudeDelta:(double)latitudeDelta mapsFoundCallback:(void (^ _Nonnull)(NSArray<NSString *> * _Nonnull, NSArray<NSString *> * _Nonnull))mapsFoundCallback;
+- (BOOL)listNearbyMapsWithUserID:(NSString * _Nullable)userID longitude:(double)longitude latitude:(double)latitude longitudeDelta:(double)longitudeDelta latitudeDelta:(double)latitudeDelta mapsFoundCallback:(void (^ _Nonnull)(NSArray<NSString *> * _Nonnull, NSArray<NSString *> * _Nonnull))mapsFoundCallback SWIFT_WARN_UNUSED_RESULT;
 - (void)resetWithSceneView:(ARSCNView * _Nonnull)sceneView;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 @end
