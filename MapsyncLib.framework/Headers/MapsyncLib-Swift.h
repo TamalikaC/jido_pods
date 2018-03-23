@@ -259,10 +259,11 @@ typedef SWIFT_ENUM(NSInteger, MapStatus) {
   MapStatusNetworkFailure = 2,
   MapStatusAuthenticationError = 3,
   MapStatusServerError = 4,
-  MapStatusLocalizationTimeout = 5,
-  MapStatusLocalizationError = 6,
-  MapStatusNoAssetFound = 7,
-  MapStatusConfigError = 8,
+  MapStatusDeveloperKeyMissingOrMalformed = 5,
+  MapStatusLocalizationTimeout = 6,
+  MapStatusLocalizationError = 7,
+  MapStatusNoAssetFound = 8,
+  MapStatusConfigError = 9,
 };
 
 
