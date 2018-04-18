@@ -164,7 +164,9 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #endif
 #if __has_feature(modules)
 @import ObjectiveC;
+@import CoreML;
 @import SceneKit;
+@import CoreGraphics;
 @import UIKit;
 #endif
 
@@ -182,6 +184,15 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 # pragma clang attribute push(__attribute__((external_source_symbol(language="Swift", defined_in="MapsyncLib",generated_declaration))), apply_to=any(function,enum,objc_interface,objc_category,objc_protocol))
 # pragma pop_macro("any")
 #endif
+
+
+SWIFT_CLASS("_TtC10MapsyncLib14DetectedObject")
+@interface DetectedObject : NSObject
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
+@end
+
+
 
 
 SWIFT_CLASS("_TtC10MapsyncLib3Map")
@@ -215,6 +226,8 @@ typedef SWIFT_ENUM(NSInteger, MapMode) {
   MapModeLocalization = 1,
 };
 
+@class UIView;
+@class ARSCNView;
 @class ARSession;
 enum MapStatus : NSInteger;
 @class ARFrame;
@@ -225,6 +238,8 @@ SWIFT_CLASS("_TtC10MapsyncLib10MapSession")
 @property (nonatomic, readonly, copy) NSString * _Nullable mapSessionUUID;
 @property (nonatomic, readonly, copy) NSString * _Nonnull mapID;
 @property (nonatomic, readonly, copy) NSString * _Nonnull userID;
+- (void)registerObjectDetectionCallbackWithScreenHeight:(CGFloat)screenHeight screenWidth:(CGFloat)screenWidth callback:(void (^ _Nonnull)(NSArray<DetectedObject *> * _Nonnull))callback;
+- (void)visualizeSceneUnderstandingWithView:(UIView * _Nonnull)view scene:(ARSCNView * _Nonnull)scene;
 - (nonnull instancetype)initWithArSession:(ARSession * _Nonnull)arSession mapMode:(enum MapMode)mapMode userID:(NSString * _Nonnull)userID mapID:(NSString * _Nonnull)mapID developerKey:(NSString * _Nonnull)developerKey assetsFoundCallback:(void (^ _Nonnull)(NSArray<MapAsset *> * _Nonnull))assetsFoundCallback statusCallback:(void (^ _Nonnull)(enum MapStatus))statusCallback OBJC_DESIGNATED_INITIALIZER;
 - (void)updateWithFrame:(ARFrame * _Nonnull)frame;
 - (BOOL)storePlacementWithAssets:(NSArray<MapAsset *> * _Nonnull)assets callback:(void (^ _Nonnull)(BOOL))callback SWIFT_WARN_UNUSED_RESULT;
@@ -265,6 +280,14 @@ typedef SWIFT_ENUM(NSInteger, MapStatus) {
   MapStatusNoAssetFound = 8,
   MapStatusConfigError = 9,
 };
+
+
+
+
+
+
+
+
 
 
 
