@@ -164,8 +164,8 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #endif
 #if __has_feature(modules)
 @import ObjectiveC;
-@import CoreML;
 @import SceneKit;
+@import CoreML;
 @import CoreGraphics;
 @import UIKit;
 #endif
@@ -188,6 +188,10 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 
 SWIFT_CLASS("_TtC10MapsyncLib14DetectedObject")
 @interface DetectedObject : NSObject
+@property (nonatomic, readonly, copy) NSString * _Nonnull name;
+@property (nonatomic, readonly) float confidence;
+@property (nonatomic, readonly) SCNVector3 center;
+@property (nonatomic, readonly) float height;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
 @end
