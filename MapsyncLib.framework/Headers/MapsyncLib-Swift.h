@@ -233,6 +233,7 @@ typedef SWIFT_ENUM(NSInteger, MapMode) {
 @class UIView;
 @class ARSCNView;
 @class ARSession;
+@class MapSessionConfiguration;
 enum MapStatus : NSInteger;
 @class ARFrame;
 
@@ -240,11 +241,12 @@ SWIFT_CLASS("_TtC10MapsyncLib10MapSession")
 @interface MapSession : NSObject
 @property (nonatomic, readonly) enum MapMode mapSessionMode;
 @property (nonatomic, readonly, copy) NSString * _Nullable mapSessionUUID;
+@property (nonatomic, readonly, copy) NSString * _Nullable mappingUUID;
 @property (nonatomic, readonly, copy) NSString * _Nonnull mapID;
 @property (nonatomic, readonly, copy) NSString * _Nonnull userID;
-- (void)registerObjectDetectionCallbackWithScreenHeight:(CGFloat)screenHeight screenWidth:(CGFloat)screenWidth callback:(void (^ _Nonnull)(NSArray<DetectedObject *> * _Nonnull))callback;
 - (void)visualizeSceneUnderstandingWithView:(UIView * _Nonnull)view scene:(ARSCNView * _Nonnull)scene;
-- (nonnull instancetype)initWithArSession:(ARSession * _Nonnull)arSession mapMode:(enum MapMode)mapMode userID:(NSString * _Nonnull)userID mapID:(NSString * _Nonnull)mapID developerKey:(NSString * _Nonnull)developerKey assetsFoundCallback:(void (^ _Nonnull)(NSArray<MapAsset *> * _Nonnull))assetsFoundCallback statusCallback:(void (^ _Nonnull)(enum MapStatus))statusCallback OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithArSession:(ARSession * _Nonnull)arSession mapMode:(enum MapMode)mapMode userID:(NSString * _Nonnull)userID mapID:(NSString * _Nonnull)mapID developerKey:(NSString * _Nonnull)developerKey screenHeight:(CGFloat)screenHeight screenWidth:(CGFloat)screenWidth mapSessionConfiguration:(MapSessionConfiguration * _Nonnull)mapSessionConfiguration OBJC_DESIGNATED_INITIALIZER;
+- (void)registerCallbacksWithAssetsFoundCallback:(void (^ _Nonnull)(NSArray<MapAsset *> * _Nonnull))assetsFoundCallback statusCallback:(void (^ _Nonnull)(enum MapStatus))statusCallback objectDetectedCallback:(void (^ _Nonnull)(NSArray<DetectedObject *> * _Nonnull))objectDetectedCallback;
 - (void)updateWithFrame:(ARFrame * _Nonnull)frame;
 - (BOOL)storePlacementWithAssets:(NSArray<MapAsset *> * _Nonnull)assets callback:(void (^ _Nonnull)(BOOL))callback SWIFT_WARN_UNUSED_RESULT;
 - (BOOL)listNearbyMapsWithUserID:(NSString * _Nullable)userID longitude:(double)longitude latitude:(double)latitude longitudeDelta:(double)longitudeDelta latitudeDelta:(double)latitudeDelta mapsFoundCallback:(void (^ _Nonnull)(NSArray<Map *> * _Nonnull))mapsFoundCallback SWIFT_WARN_UNUSED_RESULT;
@@ -270,6 +272,14 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class) BOOL USE_BETA_ALGO;)
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class) NSInteger RETRIEVE_ASSETS_INTERVAL;)
 + (NSInteger)RETRIEVE_ASSETS_INTERVAL SWIFT_WARN_UNUSED_RESULT;
 + (void)setRETRIEVE_ASSETS_INTERVAL:(NSInteger)value;
+@end
+
+
+SWIFT_CLASS("_TtC10MapsyncLib23MapSessionConfiguration")
+@interface MapSessionConfiguration : NSObject
+- (nonnull instancetype)initWithSceneUnderstandingConfidenceThreshold:(float)sceneUnderstandingConfidenceThreshold featureMatchDistanceMeters:(float)featureMatchDistanceMeters OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
 @end
 
 typedef SWIFT_ENUM(NSInteger, MapStatus) {
