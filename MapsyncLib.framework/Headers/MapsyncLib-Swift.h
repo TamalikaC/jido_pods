@@ -192,6 +192,7 @@ SWIFT_CLASS("_TtC10MapsyncLib14DetectedObject")
 @property (nonatomic, readonly) float confidence;
 @property (nonatomic, readonly) SCNVector3 center;
 @property (nonatomic, readonly) float height;
+@property (nonatomic, readonly) NSInteger id;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
 @end
