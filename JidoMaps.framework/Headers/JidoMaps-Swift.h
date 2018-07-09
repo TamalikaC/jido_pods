@@ -165,7 +165,6 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #if __has_feature(modules)
 @import ObjectiveC;
 @import SceneKit;
-@import ARKit;
 @import CoreGraphics;
 @import CoreML;
 @import UIKit;
@@ -206,12 +205,12 @@ enum SessionMode : NSInteger;
 @class ARSession;
 @class MapAsset;
 enum MapStatus : NSInteger;
+@class ARAnchor;
 @class ARFrame;
 @class Map;
-@class ARAnchor;
 
 SWIFT_CLASS("_TtC8JidoMaps11JidoSession")
-@interface JidoSession : NSObject <ARSessionDelegate>
+@interface JidoSession : NSObject
 @property (nonatomic, readonly) enum SessionMode JidoSessionMode;
 @property (nonatomic, readonly, copy) NSString * _Nullable currentSessionUUID;
 @property (nonatomic, readonly, copy) NSString * _Nullable mappingUUID;
@@ -220,13 +219,12 @@ SWIFT_CLASS("_TtC8JidoMaps11JidoSession")
 @property (nonatomic, readonly, copy) NSString * _Nonnull userID;
 - (nonnull instancetype)initWithArSession:(ARSession * _Nonnull)arSession mapMode:(enum SessionMode)mapMode userID:(NSString * _Nonnull)userID mapID:(NSString * _Nonnull)mapID developerKey:(NSString * _Nonnull)developerKey screenHeight:(CGFloat)screenHeight screenWidth:(CGFloat)screenWidth assetsFoundCallback:(void (^ _Nonnull)(NSArray<MapAsset *> * _Nonnull))assetsFoundCallback progressCallback:(void (^ _Nonnull)(NSInteger))progressCallback statusCallback:(void (^ _Nonnull)(enum MapStatus))statusCallback objectDetectedCallback:(void (^ _Nonnull)(NSArray<DetectedObject *> * _Nonnull))objectDetectedCallback OBJC_DESIGNATED_INITIALIZER;
 - (void)dispose;
+- (void)planeDetectedWithAnchor:(ARAnchor * _Nonnull)anchor;
+- (void)planeUpdatedWithAnchor:(ARAnchor * _Nonnull)anchor;
+- (void)planeRemovedWithAnchor:(ARAnchor * _Nonnull)anchor;
 - (void)updateWithFrame:(ARFrame * _Nonnull)frame;
 - (BOOL)storePlacementWithAssets:(NSArray<MapAsset *> * _Nonnull)assets callback:(void (^ _Nonnull)(BOOL))callback SWIFT_WARN_UNUSED_RESULT;
 - (BOOL)listNearbyMapsWithUserID:(NSString * _Nullable)userID longitude:(double)longitude latitude:(double)latitude longitudeDelta:(double)longitudeDelta latitudeDelta:(double)latitudeDelta mapsFoundCallback:(void (^ _Nonnull)(NSArray<Map *> * _Nonnull))mapsFoundCallback SWIFT_WARN_UNUSED_RESULT;
-- (void)session:(ARSession * _Nonnull)session didAddAnchors:(NSArray<ARAnchor *> * _Nonnull)anchors;
-- (void)session:(ARSession * _Nonnull)session didUpdateAnchors:(NSArray<ARAnchor *> * _Nonnull)anchors;
-- (void)session:(ARSession * _Nonnull)session didRemoveAnchors:(NSArray<ARAnchor *> * _Nonnull)anchors;
-- (void)session:(ARSession * _Nonnull)ARSession didUpdateFrame:(ARFrame * _Nonnull)frame;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
 @end
