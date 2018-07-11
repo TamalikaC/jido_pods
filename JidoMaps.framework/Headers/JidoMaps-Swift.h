@@ -265,6 +265,7 @@ SWIFT_CLASS("_TtC8JidoMaps8MapAsset")
 @property (nonatomic) SCNVector3 position;
 @property (nonatomic) float orientation;
 @property (nonatomic) float confidence;
+@property (nonatomic, copy) NSString * _Nonnull matrix;
 - (nonnull instancetype)init:(NSString * _Nonnull)assetID :(SCNVector3)position :(float)orientation;
 - (BOOL)isEqual:(id _Nullable)object SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
