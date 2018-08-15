@@ -233,7 +233,7 @@ SWIFT_CLASS("_TtC8JidoMaps11JidoSession")
 - (void)session:(ARSession * _Nonnull)session didAdd:(NSArray<ARAnchor *> * _Nonnull)anchors;
 - (void)session:(ARSession * _Nonnull)session didUpdate:(NSArray<ARAnchor *> * _Nonnull)anchors;
 - (void)session:(ARSession * _Nonnull)session didRemove:(NSArray<ARAnchor *> * _Nonnull)anchors;
-+ (MapTransform * _Nonnull)MultiplayerTransformUpdateWithGetTapLocal:(vector_float3)getTapLocal tapLocal:(vector_float3)tapLocal getTapRemote:(vector_float3)getTapRemote tapRemote:(vector_float3)tapRemote rotationRemoteToLocal:(Quaternion * _Nullable)rotationRemoteToLocal SWIFT_WARN_UNUSED_RESULT;
++ (MapTransform * _Nonnull)MultiplayerSyncWithGetTapLocal:(vector_float3)getTapLocal tapLocal:(vector_float3)tapLocal getTapRemote:(vector_float3)getTapRemote tapRemote:(vector_float3)tapRemote rotationRemoteToLocal:(Quaternion * _Nullable)rotationRemoteToLocal SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
 @end
@@ -298,6 +298,7 @@ typedef SWIFT_ENUM(NSInteger, MapStatus) {
 SWIFT_CLASS("_TtC8JidoMaps12MapTransform")
 @interface MapTransform : NSObject
 @property (nonatomic, readonly, strong) Quaternion * _Nonnull RotationRemoteToLocal;
+@property (nonatomic, readonly) vector_float3 OffsetLocalToRemote;
 @property (nonatomic, readonly) float UpdateError;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
