@@ -195,7 +195,6 @@ SWIFT_CLASS("_TtC8JidoMaps14DetectedObject")
 @property (nonatomic, readonly) float height;
 @property (nonatomic, readonly) float depth;
 @property (nonatomic, readonly) float orientation;
-@property (nonatomic, readonly) NSInteger seenCount;
 @property (nonatomic, readonly) NSInteger id;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
@@ -208,15 +207,21 @@ enum MapStatus : NSInteger;
 @class ARAnchor;
 @class ARFrame;
 @class Map;
+@class Quaternion;
+@class MapTransform;
 
 SWIFT_CLASS("_TtC8JidoMaps11JidoSession")
 @interface JidoSession : NSObject
-@property (nonatomic, readonly) enum SessionMode JidoSessionMode;
+@property (nonatomic, readonly) enum SessionMode jidoSessionMode;
+@property (nonatomic, readonly) BOOL isLocalizationMode;
 @property (nonatomic, readonly, copy) NSString * _Nullable currentSessionUUID;
 @property (nonatomic, readonly, copy) NSString * _Nullable mappingUUID;
 @property (nonatomic, readonly, copy) NSString * _Nullable localizationUUID;
 @property (nonatomic, readonly, copy) NSString * _Nonnull mapID;
 @property (nonatomic, readonly, copy) NSString * _Nonnull userID;
+@property (nonatomic) float fpsInput;
+@property (nonatomic) float fpsDataProcess1;
+@property (nonatomic) float fpsDataProcess2;
 - (nonnull instancetype)initWithArSession:(ARSession * _Nonnull)arSession mapMode:(enum SessionMode)mapMode userID:(NSString * _Nonnull)userID mapID:(NSString * _Nonnull)mapID developerKey:(NSString * _Nonnull)developerKey screenHeight:(CGFloat)screenHeight screenWidth:(CGFloat)screenWidth assetsFoundCallback:(void (^ _Nonnull)(NSArray<MapAsset *> * _Nonnull))assetsFoundCallback progressCallback:(void (^ _Nonnull)(NSInteger))progressCallback statusCallback:(void (^ _Nonnull)(enum MapStatus))statusCallback objectDetectedCallback:(void (^ _Nonnull)(NSArray<DetectedObject *> * _Nonnull))objectDetectedCallback OBJC_DESIGNATED_INITIALIZER;
 - (void)dispose;
 - (void)planeDetectedWithAnchor:(ARAnchor * _Nonnull)anchor;
@@ -225,6 +230,10 @@ SWIFT_CLASS("_TtC8JidoMaps11JidoSession")
 - (void)updateWithFrame:(ARFrame * _Nonnull)frame;
 - (BOOL)storePlacementWithAssets:(NSArray<MapAsset *> * _Nonnull)assets callback:(void (^ _Nonnull)(BOOL))callback SWIFT_WARN_UNUSED_RESULT;
 - (BOOL)listNearbyMapsWithUserID:(NSString * _Nullable)userID longitude:(double)longitude latitude:(double)latitude longitudeDelta:(double)longitudeDelta latitudeDelta:(double)latitudeDelta mapsFoundCallback:(void (^ _Nonnull)(NSArray<Map *> * _Nonnull))mapsFoundCallback SWIFT_WARN_UNUSED_RESULT;
+- (void)session:(ARSession * _Nonnull)session didAdd:(NSArray<ARAnchor *> * _Nonnull)anchors;
+- (void)session:(ARSession * _Nonnull)session didUpdate:(NSArray<ARAnchor *> * _Nonnull)anchors;
+- (void)session:(ARSession * _Nonnull)session didRemove:(NSArray<ARAnchor *> * _Nonnull)anchors;
++ (MapTransform * _Nonnull)MultiplayerTransformUpdateWithGetTapLocal:(vector_float3)getTapLocal tapLocal:(vector_float3)tapLocal getTapRemote:(vector_float3)getTapRemote tapRemote:(vector_float3)tapRemote rotationRemoteToLocal:(Quaternion * _Nullable)rotationRemoteToLocal SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
 @end
@@ -284,6 +293,28 @@ typedef SWIFT_ENUM(NSInteger, MapStatus) {
   MapStatusNoAssetFound = 8,
   MapStatusConfigError = 9,
 };
+
+
+SWIFT_CLASS("_TtC8JidoMaps12MapTransform")
+@interface MapTransform : NSObject
+@property (nonatomic, readonly, strong) Quaternion * _Nonnull RotationRemoteToLocal;
+@property (nonatomic, readonly) float UpdateError;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
+@end
+
+
+SWIFT_CLASS("_TtC8JidoMaps10Quaternion")
+@interface Quaternion : NSObject
+@property (nonatomic, readonly) float X;
+@property (nonatomic, readonly) float Y;
+@property (nonatomic, readonly) float Z;
+@property (nonatomic, readonly) float W;
+- (nonnull instancetype)initWithX:(float)x y:(float)y z:(float)z w:(float)w OBJC_DESIGNATED_INITIALIZER;
++ (Quaternion * _Nonnull)EulerWithX:(float)x y:(float)y z:(float)z SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
+@end
 
 
 
