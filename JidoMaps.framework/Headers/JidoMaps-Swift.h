@@ -271,6 +271,7 @@ SWIFT_CLASS("_TtC8JidoMaps3Map")
 + (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
 @end
 
+@class SCNNode;
 
 SWIFT_CLASS("_TtC8JidoMaps8MapAsset")
 @interface MapAsset : NSObject
@@ -279,6 +280,8 @@ SWIFT_CLASS("_TtC8JidoMaps8MapAsset")
 @property (nonatomic) float orientation;
 @property (nonatomic) float confidence;
 @property (nonatomic, copy) NSString * _Nonnull matrix;
+@property (nonatomic) BOOL isDownloaded;
+@property (nonatomic, strong) SCNNode * _Nullable assetNode;
 - (nonnull instancetype)init:(NSString * _Nonnull)assetID :(SCNVector3)position :(float)orientation;
 - (BOOL)isEqual:(id _Nullable)object SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
