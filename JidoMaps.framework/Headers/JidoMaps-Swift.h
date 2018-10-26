@@ -276,13 +276,15 @@ SWIFT_CLASS("_TtC8JidoMaps3Map")
 SWIFT_CLASS("_TtC8JidoMaps8MapAsset")
 @interface MapAsset : NSObject
 @property (nonatomic, copy) NSString * _Nonnull assetID;
+@property (nonatomic, copy) NSString * _Nonnull uuid;
 @property (nonatomic) SCNVector3 position;
 @property (nonatomic) float orientation;
 @property (nonatomic) float confidence;
 @property (nonatomic, copy) NSString * _Nonnull matrix;
 @property (nonatomic) BOOL isDownloaded;
 @property (nonatomic, strong) SCNNode * _Nullable assetNode;
-- (nonnull instancetype)init:(NSString * _Nonnull)assetID :(SCNVector3)position :(float)orientation;
+@property (nonatomic) float assetScale;
+- (nonnull instancetype)init:(NSString * _Nonnull)assetID :(SCNVector3)position :(float)orientation :(float)scale :(NSString * _Nonnull)uuid;
 - (BOOL)isEqual:(id _Nullable)object SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
