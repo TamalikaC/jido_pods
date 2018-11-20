@@ -223,6 +223,7 @@ SWIFT_CLASS("_TtC8JidoMaps11JidoSession")
 @property (nonatomic) float fpsDataProcess1;
 @property (nonatomic) float fpsDataProcess2;
 - (nonnull instancetype)initWithArSession:(ARSession * _Nonnull)arSession mapMode:(enum SessionMode)mapMode userID:(NSString * _Nonnull)userID mapID:(NSString * _Nonnull)mapID developerKey:(NSString * _Nonnull)developerKey screenHeight:(CGFloat)screenHeight screenWidth:(CGFloat)screenWidth assetsFoundCallback:(void (^ _Nonnull)(NSArray<MapAsset *> * _Nonnull))assetsFoundCallback progressCallback:(void (^ _Nonnull)(NSInteger))progressCallback statusCallback:(void (^ _Nonnull)(enum MapStatus))statusCallback objectDetectedCallback:(void (^ _Nonnull)(NSArray<DetectedObject *> * _Nonnull))objectDetectedCallback OBJC_DESIGNATED_INITIALIZER;
+- (void)uploadDetailedMapWithProgressCallback:(void (^ _Nonnull)(float))progressCallback uploadCompleteCallback:(void (^ _Nonnull)(void))uploadCompleteCallback;
 - (void)dispose;
 - (void)planeDetectedWithAnchor:(ARAnchor * _Nonnull)anchor;
 - (void)planeUpdatedWithAnchor:(ARAnchor * _Nonnull)anchor;
@@ -243,9 +244,6 @@ SWIFT_CLASS("_TtC8JidoMaps11JidoSession")
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class) NSInteger TIMEOUT_THRESHOLD;)
 + (NSInteger)TIMEOUT_THRESHOLD SWIFT_WARN_UNUSED_RESULT;
 + (void)setTIMEOUT_THRESHOLD:(NSInteger)value;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class) BOOL USE_BETA_ALGO;)
-+ (BOOL)USE_BETA_ALGO SWIFT_WARN_UNUSED_RESULT;
-+ (void)setUSE_BETA_ALGO:(BOOL)value;
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class) NSInteger RETRIEVE_ASSETS_INTERVAL;)
 + (NSInteger)RETRIEVE_ASSETS_INTERVAL SWIFT_WARN_UNUSED_RESULT;
 + (void)setRETRIEVE_ASSETS_INTERVAL:(NSInteger)value;
@@ -270,15 +268,20 @@ SWIFT_CLASS("_TtC8JidoMaps3Map")
 + (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
 @end
 
+@class SCNNode;
 
 SWIFT_CLASS("_TtC8JidoMaps8MapAsset")
 @interface MapAsset : NSObject
 @property (nonatomic, copy) NSString * _Nonnull assetID;
+@property (nonatomic, copy) NSString * _Nonnull uuid;
 @property (nonatomic) SCNVector3 position;
 @property (nonatomic) float orientation;
 @property (nonatomic) float confidence;
 @property (nonatomic, copy) NSString * _Nonnull matrix;
-- (nonnull instancetype)init:(NSString * _Nonnull)assetID :(SCNVector3)position :(float)orientation;
+@property (nonatomic) BOOL isDownloaded;
+@property (nonatomic, strong) SCNNode * _Nullable assetNode;
+@property (nonatomic) float assetScale;
+- (nonnull instancetype)init:(NSString * _Nonnull)assetID :(SCNVector3)position :(float)orientation :(float)scale :(NSString * _Nonnull)uuid;
 - (BOOL)isEqual:(id _Nullable)object SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
