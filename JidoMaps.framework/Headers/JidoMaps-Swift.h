@@ -195,6 +195,7 @@ SWIFT_CLASS("_TtC8JidoMaps14DetectedObject")
 @property (nonatomic, readonly) float height;
 @property (nonatomic, readonly) float depth;
 @property (nonatomic, readonly) float orientation;
+@property (nonatomic, readonly) NSInteger seenCount;
 @property (nonatomic, readonly) NSInteger id;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
@@ -207,23 +208,16 @@ enum MapStatus : NSInteger;
 @class ARAnchor;
 @class ARFrame;
 @class Map;
-@class Quaternion;
-@class UnityMultiplayerTransform;
 
 SWIFT_CLASS("_TtC8JidoMaps11JidoSession")
 @interface JidoSession : NSObject
-@property (nonatomic, readonly) enum SessionMode jidoSessionMode;
-@property (nonatomic, readonly) BOOL isLocalizationMode;
+@property (nonatomic, readonly) enum SessionMode JidoSessionMode;
 @property (nonatomic, readonly, copy) NSString * _Nullable currentSessionUUID;
 @property (nonatomic, readonly, copy) NSString * _Nullable mappingUUID;
 @property (nonatomic, readonly, copy) NSString * _Nullable localizationUUID;
 @property (nonatomic, readonly, copy) NSString * _Nonnull mapID;
 @property (nonatomic, readonly, copy) NSString * _Nonnull userID;
-@property (nonatomic) float fpsInput;
-@property (nonatomic) float fpsDataProcess1;
-@property (nonatomic) float fpsDataProcess2;
 - (nonnull instancetype)initWithArSession:(ARSession * _Nonnull)arSession mapMode:(enum SessionMode)mapMode userID:(NSString * _Nonnull)userID mapID:(NSString * _Nonnull)mapID developerKey:(NSString * _Nonnull)developerKey screenHeight:(CGFloat)screenHeight screenWidth:(CGFloat)screenWidth assetsFoundCallback:(void (^ _Nonnull)(NSArray<MapAsset *> * _Nonnull))assetsFoundCallback progressCallback:(void (^ _Nonnull)(NSInteger))progressCallback statusCallback:(void (^ _Nonnull)(enum MapStatus))statusCallback objectDetectedCallback:(void (^ _Nonnull)(NSArray<DetectedObject *> * _Nonnull))objectDetectedCallback OBJC_DESIGNATED_INITIALIZER;
-- (void)uploadDetailedMapWithProgressCallback:(void (^ _Nonnull)(float))progressCallback uploadCompleteCallback:(void (^ _Nonnull)(void))uploadCompleteCallback;
 - (void)dispose;
 - (void)planeDetectedWithAnchor:(ARAnchor * _Nonnull)anchor;
 - (void)planeUpdatedWithAnchor:(ARAnchor * _Nonnull)anchor;
@@ -231,10 +225,6 @@ SWIFT_CLASS("_TtC8JidoMaps11JidoSession")
 - (void)updateWithFrame:(ARFrame * _Nonnull)frame;
 - (BOOL)storePlacementWithAssets:(NSArray<MapAsset *> * _Nonnull)assets callback:(void (^ _Nonnull)(BOOL))callback SWIFT_WARN_UNUSED_RESULT;
 - (BOOL)listNearbyMapsWithUserID:(NSString * _Nullable)userID longitude:(double)longitude latitude:(double)latitude longitudeDelta:(double)longitudeDelta latitudeDelta:(double)latitudeDelta mapsFoundCallback:(void (^ _Nonnull)(NSArray<Map *> * _Nonnull))mapsFoundCallback SWIFT_WARN_UNUSED_RESULT;
-- (void)session:(ARSession * _Nonnull)session didAdd:(NSArray<ARAnchor *> * _Nonnull)anchors;
-- (void)session:(ARSession * _Nonnull)session didUpdate:(NSArray<ARAnchor *> * _Nonnull)anchors;
-- (void)session:(ARSession * _Nonnull)session didRemove:(NSArray<ARAnchor *> * _Nonnull)anchors;
-+ (UnityMultiplayerTransform * _Nonnull)unityMultiplayerSyncWithLocalA:(vector_float3)localA localB:(vector_float3)localB remoteA:(vector_float3)remoteA remoteB:(vector_float3)remoteB rotationRemote:(Quaternion * _Nullable)rotationRemote SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
 @end
@@ -247,9 +237,6 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class) NSInteger TIMEOUT_THRESHOLD;)
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class) NSInteger RETRIEVE_ASSETS_INTERVAL;)
 + (NSInteger)RETRIEVE_ASSETS_INTERVAL SWIFT_WARN_UNUSED_RESULT;
 + (void)setRETRIEVE_ASSETS_INTERVAL:(NSInteger)value;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class) BOOL BUILD_HEAVY_MAP;)
-+ (BOOL)BUILD_HEAVY_MAP SWIFT_WARN_UNUSED_RESULT;
-+ (void)setBUILD_HEAVY_MAP:(BOOL)value;
 @end
 
 
@@ -268,20 +255,15 @@ SWIFT_CLASS("_TtC8JidoMaps3Map")
 + (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
 @end
 
-@class SCNNode;
 
 SWIFT_CLASS("_TtC8JidoMaps8MapAsset")
 @interface MapAsset : NSObject
 @property (nonatomic, copy) NSString * _Nonnull assetID;
-@property (nonatomic, copy) NSString * _Nonnull uuid;
 @property (nonatomic) SCNVector3 position;
 @property (nonatomic) float orientation;
 @property (nonatomic) float confidence;
 @property (nonatomic, copy) NSString * _Nonnull matrix;
-@property (nonatomic) BOOL isDownloaded;
-@property (nonatomic, strong) SCNNode * _Nullable assetNode;
-@property (nonatomic) float assetScale;
-- (nonnull instancetype)init:(NSString * _Nonnull)assetID :(SCNVector3)position :(float)orientation :(float)scale :(NSString * _Nonnull)uuid;
+- (nonnull instancetype)init:(NSString * _Nonnull)assetID :(SCNVector3)position :(float)orientation;
 - (BOOL)isEqual:(id _Nullable)object SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
@@ -301,19 +283,6 @@ typedef SWIFT_ENUM(NSInteger, MapStatus, closed) {
 };
 
 
-SWIFT_CLASS("_TtC8JidoMaps10Quaternion")
-@interface Quaternion : NSObject
-@property (nonatomic, readonly) float x;
-@property (nonatomic, readonly) float y;
-@property (nonatomic, readonly) float z;
-@property (nonatomic, readonly) float w;
-- (nonnull instancetype)initWithX:(float)x y:(float)y z:(float)z w:(float)w OBJC_DESIGNATED_INITIALIZER;
-+ (Quaternion * _Nonnull)eulerWithX:(float)x y:(float)y z:(float)z SWIFT_WARN_UNUSED_RESULT;
-- (nonnull instancetype)init SWIFT_UNAVAILABLE;
-+ (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
-@end
-
-
 
 typedef SWIFT_ENUM(NSInteger, SessionMode, closed) {
   SessionModeMapping = 0,
@@ -327,16 +296,6 @@ typedef SWIFT_ENUM(NSInteger, SessionMode, closed) {
 
 
 
-
-
-SWIFT_CLASS("_TtC8JidoMaps25UnityMultiplayerTransform")
-@interface UnityMultiplayerTransform : NSObject
-@property (nonatomic, readonly, strong) Quaternion * _Nonnull rotationRemoteToLocal;
-@property (nonatomic, readonly) vector_float3 offsetLocalToRemote;
-@property (nonatomic, readonly) float updateError;
-- (nonnull instancetype)init SWIFT_UNAVAILABLE;
-+ (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
-@end
 
 #if __has_attribute(external_source_symbol)
 # pragma clang attribute pop
