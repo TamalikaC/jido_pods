@@ -365,6 +365,11 @@ typedef SWIFT_ENUM(NSInteger, SessionMode, closed) {
 
 SWIFT_CLASS("_TtC8JidoMaps15TransformResult")
 @interface TransformResult : NSObject
+@property (nonatomic, readonly, copy) NSString * _Nonnull algorithm;
+@property (nonatomic, readonly, copy) NSString * _Nonnull anchorName;
+@property (nonatomic, readonly, copy) NSArray<NSNumber *> * _Nonnull transform;
+@property (nonatomic, readonly) float matchValue;
+@property (nonatomic, readonly, copy) NSString * _Nonnull transformAsString;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
 @end
