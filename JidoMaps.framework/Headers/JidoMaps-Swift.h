@@ -204,6 +204,15 @@ SWIFT_CLASS("_TtC8JidoMaps14DetectedObject")
 + (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
 @end
 
+
+SWIFT_CLASS("_TtC8JidoMaps5Edges")
+@interface Edges : NSObject
+@property (nonatomic, copy) NSString * _Nonnull identifier;
+@property (nonatomic) float distance;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
+@end
+
 enum SessionMode : NSInteger;
 @class ARSession;
 @class MapAsset;
@@ -212,6 +221,7 @@ enum MapStatus : NSInteger;
 enum ScanFeedback : NSInteger;
 @class SCNNode;
 @class ARAnchor;
+@class ARImageAnchor;
 @class ARFrame;
 @class Map;
 @class Quaternion;
@@ -232,7 +242,7 @@ SWIFT_CLASS("_TtC8JidoMaps11JidoSession")
 @property (nonatomic) float fpsInput;
 @property (nonatomic) float fpsDataProcess1;
 @property (nonatomic) float fpsDataProcess2;
-- (nonnull instancetype)initWithArSession:(ARSession * _Nonnull)arSession mapMode:(enum SessionMode)mapMode userID:(NSString * _Nonnull)userID mapID:(NSString * _Nonnull)mapID developerKey:(NSString * _Nonnull)developerKey screenHeight:(CGFloat)screenHeight screenWidth:(CGFloat)screenWidth assetsFoundCallback:(void (^ _Nonnull)(NSArray<MapAsset *> * _Nonnull, NSArray<NSString *> * _Nonnull))assetsFoundCallback waypointsFoundCallback:(void (^ _Nonnull)(NSArray<Waypoint *> * _Nonnull))waypointsFoundCallback progressCallback:(void (^ _Nonnull)(NSInteger))progressCallback statusCallback:(void (^ _Nonnull)(enum MapStatus))statusCallback objectDetectedCallback:(void (^ _Nonnull)(NSArray<DetectedObject *> * _Nonnull))objectDetectedCallback OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithArSession:(ARSession * _Nonnull)arSession mapMode:(enum SessionMode)mapMode userID:(NSString * _Nonnull)userID mapID:(NSString * _Nonnull)mapID developerKey:(NSString * _Nonnull)developerKey screenHeight:(CGFloat)screenHeight screenWidth:(CGFloat)screenWidth assetsFoundCallback:(void (^ _Nonnull)(NSArray<MapAsset *> * _Nonnull, NSArray<NSString *> * _Nonnull, NSString * _Nonnull))assetsFoundCallback waypointsFoundCallback:(void (^ _Nonnull)(NSArray<Waypoint *> * _Nonnull))waypointsFoundCallback progressCallback:(void (^ _Nonnull)(NSInteger))progressCallback statusCallback:(void (^ _Nonnull)(enum MapStatus))statusCallback objectDetectedCallback:(void (^ _Nonnull)(NSArray<DetectedObject *> * _Nonnull))objectDetectedCallback OBJC_DESIGNATED_INITIALIZER;
 - (NSArray<NSNumber *> * _Nullable)getOperativeTransform SWIFT_WARN_UNUSED_RESULT;
 - (void)registerScanFeedbackCallbackWithFeedbackCallback:(void (^ _Nonnull)(enum ScanFeedback))feedbackCallback;
 - (void)retrieveTexturedScanPreviewWithPreviewAvailableCallback:(void (^ _Nonnull)(SCNNode * _Nonnull))previewAvailableCallback;
@@ -243,7 +253,10 @@ SWIFT_CLASS("_TtC8JidoMaps11JidoSession")
 - (void)planeDetectedWithAnchor:(ARAnchor * _Nonnull)anchor;
 - (void)planeUpdatedWithAnchor:(ARAnchor * _Nonnull)anchor;
 - (void)planeRemovedWithAnchor:(ARAnchor * _Nonnull)anchor;
+- (void)anchorVariantDetectedWithAnchor:(ARImageAnchor * _Nonnull)anchor variantName:(NSString * _Nonnull)variantName SWIFT_AVAILABILITY(ios,introduced=11.3);
 - (void)updateWithFrame:(ARFrame * _Nonnull)frame;
+- (NSArray<Waypoint *> * _Nonnull)convertWaypointsToLocalFrameWithWaypoints:(NSArray<Waypoint *> * _Nonnull)waypoints SWIFT_WARN_UNUSED_RESULT;
+- (void)updateWaypointsTransform;
 - (void)updateNavigationWithDestination:(NSString * _Nonnull)destination;
 - (BOOL)storePlacementWithAssets:(NSArray<MapAsset *> * _Nonnull)assets callback:(void (^ _Nonnull)(BOOL))callback SWIFT_WARN_UNUSED_RESULT;
 + (void)listNearbyMapsWithMapsFoundCallback:(void (^ _Nonnull)(NSArray<Map *> * _Nonnull))mapsFoundCallback;
@@ -271,6 +284,8 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class) BOOL BUILD_HEAVY_MAP;)
 + (void)setBUILD_HEAVY_MAP:(BOOL)value;
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly) BOOL IS_NAVIGATION_APP;)
 + (BOOL)IS_NAVIGATION_APP SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly) BOOL IS_IKEA_GUIDANCE;)
++ (BOOL)IS_IKEA_GUIDANCE SWIFT_WARN_UNUSED_RESULT;
 @end
 
 
@@ -348,6 +363,13 @@ typedef SWIFT_ENUM(NSInteger, SessionMode, closed) {
 
 
 
+SWIFT_CLASS("_TtC8JidoMaps15TransformResult")
+@interface TransformResult : NSObject
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
+@end
+
+
 
 
 
@@ -370,6 +392,9 @@ SWIFT_CLASS("_TtC8JidoMaps8Waypoint")
 @interface Waypoint : NSObject
 @property (nonatomic, copy) NSString * _Nonnull waypointId;
 @property (nonatomic) SCNVector3 position;
+@property (nonatomic, copy) NSString * _Nonnull waypointType;
+@property (nonatomic, copy) NSString * _Nonnull nextWaypoint;
+@property (nonatomic, copy) NSArray<Edges *> * _Nonnull edges;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
 @end
