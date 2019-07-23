@@ -346,6 +346,8 @@ SWIFT_CLASS("_TtC8JidoMaps8MapAsset")
 @property (nonatomic, copy) NSArray<SCNNode *> * _Nonnull alternateModels;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
+- (nonnull instancetype)init:(NSString * _Nonnull)assetID :(SCNVector3)position :(float)orientation :(float)confidence :(NSString * _Nonnull)uuid :(float)scale;
+- (nonnull instancetype)init:(NSString * _Nonnull)assetID :(SCNVector3)position :(float)orientation :(float)scale :(NSString * _Nonnull)uuid;
 - (nonnull instancetype)initWithCoder:(NSCoder * _Nonnull)decoder;
 - (void)encodeWithCoder:(NSCoder * _Nonnull)aCoder;
 - (BOOL)isEqual:(id _Nullable)object SWIFT_WARN_UNUSED_RESULT;
