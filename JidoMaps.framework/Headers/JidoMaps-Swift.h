@@ -189,6 +189,15 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 # pragma pop_macro("any")
 #endif
 
+@class NSCoder;
+
+SWIFT_CLASS("_TtC8JidoMaps23DetectedImageAnchorData")
+@interface DetectedImageAnchorData : NSObject <NSCoding>
+- (nonnull instancetype)initWithCoder:(NSCoder * _Nonnull)decoder;
+- (void)encodeWithCoder:(NSCoder * _Nonnull)aCoder;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
 
 SWIFT_CLASS("_TtC8JidoMaps14DetectedObject")
 @interface DetectedObject : NSObject
@@ -206,11 +215,29 @@ SWIFT_CLASS("_TtC8JidoMaps14DetectedObject")
 
 
 SWIFT_CLASS("_TtC8JidoMaps5Edges")
-@interface Edges : NSObject
+@interface Edges : NSObject <NSCoding>
 @property (nonatomic, copy) NSString * _Nonnull identifier;
 @property (nonatomic) float distance;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
+- (nonnull instancetype)initWithCoder:(NSCoder * _Nonnull)decoder;
+- (void)encodeWithCoder:(NSCoder * _Nonnull)aCoder;
+@end
+
+
+SWIFT_CLASS("_TtC8JidoMaps15FilePathArchive")
+@interface FilePathArchive : NSObject <NSCoding>
+- (nonnull instancetype)initWithCoder:(NSCoder * _Nonnull)decoder;
+- (void)encodeWithCoder:(NSCoder * _Nonnull)aCoder;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
+SWIFT_CLASS("_TtC8JidoMaps11ImageAnchor")
+@interface ImageAnchor : NSObject <NSCoding>
+- (nonnull instancetype)initWithCoder:(NSCoder * _Nonnull)decoder;
+- (void)encodeWithCoder:(NSCoder * _Nonnull)aCoder;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
 enum SessionMode : NSInteger;
@@ -306,7 +333,7 @@ SWIFT_CLASS("_TtC8JidoMaps3Map")
 
 
 SWIFT_CLASS("_TtC8JidoMaps8MapAsset")
-@interface MapAsset : NSObject
+@interface MapAsset : NSObject <NSCoding>
 @property (nonatomic, copy) NSString * _Nonnull assetID;
 @property (nonatomic, copy) NSString * _Nonnull uuid;
 @property (nonatomic) SCNVector3 position;
@@ -317,23 +344,25 @@ SWIFT_CLASS("_TtC8JidoMaps8MapAsset")
 @property (nonatomic) float assetScale;
 @property (nonatomic) BOOL isDownloadableAsset;
 @property (nonatomic, copy) NSArray<SCNNode *> * _Nonnull alternateModels;
-- (nonnull instancetype)init:(NSString * _Nonnull)assetID :(SCNVector3)position :(float)orientation :(float)scale :(NSString * _Nonnull)uuid;
-- (BOOL)isEqual:(id _Nullable)object SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
+- (nonnull instancetype)initWithCoder:(NSCoder * _Nonnull)decoder;
+- (void)encodeWithCoder:(NSCoder * _Nonnull)aCoder;
+- (BOOL)isEqual:(id _Nullable)object SWIFT_WARN_UNUSED_RESULT;
 @end
 
 typedef SWIFT_ENUM(NSInteger, MapStatus, closed) {
   MapStatusInitialized = 0,
   MapStatusNoMapFound = 1,
-  MapStatusNetworkFailure = 2,
-  MapStatusAuthenticationError = 3,
-  MapStatusServerError = 4,
-  MapStatusDeveloperKeyMissingOrMalformed = 5,
-  MapStatusLocalizationTimeout = 6,
-  MapStatusLocalizationError = 7,
-  MapStatusNoAssetFound = 8,
-  MapStatusConfigError = 9,
+  MapStatusDownloadRequired = 2,
+  MapStatusNetworkFailure = 3,
+  MapStatusAuthenticationError = 4,
+  MapStatusServerError = 5,
+  MapStatusDeveloperKeyMissingOrMalformed = 6,
+  MapStatusLocalizationTimeout = 7,
+  MapStatusLocalizationError = 8,
+  MapStatusNoAssetFound = 9,
+  MapStatusConfigError = 10,
 };
 
 
@@ -363,18 +392,6 @@ typedef SWIFT_ENUM(NSInteger, SessionMode, closed) {
 
 
 
-SWIFT_CLASS("_TtC8JidoMaps15TransformResult")
-@interface TransformResult : NSObject
-@property (nonatomic, readonly, copy) NSString * _Nonnull algorithm;
-@property (nonatomic, readonly, copy) NSString * _Nonnull anchorName;
-@property (nonatomic, readonly, copy) NSArray<NSNumber *> * _Nonnull transform;
-@property (nonatomic, readonly) float matchValue;
-@property (nonatomic, readonly, copy) NSString * _Nonnull transformAsString;
-- (nonnull instancetype)init SWIFT_UNAVAILABLE;
-+ (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
-@end
-
-
 
 
 
@@ -394,7 +411,7 @@ SWIFT_CLASS("_TtC8JidoMaps25UnityMultiplayerTransform")
 
 
 SWIFT_CLASS("_TtC8JidoMaps8Waypoint")
-@interface Waypoint : NSObject
+@interface Waypoint : NSObject <NSCoding>
 @property (nonatomic, copy) NSString * _Nonnull waypointId;
 @property (nonatomic) SCNVector3 position;
 @property (nonatomic, copy) NSString * _Nonnull waypointType;
@@ -402,6 +419,8 @@ SWIFT_CLASS("_TtC8JidoMaps8Waypoint")
 @property (nonatomic, copy) NSArray<Edges *> * _Nonnull edges;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
+- (nonnull instancetype)initWithCoder:(NSCoder * _Nonnull)decoder;
+- (void)encodeWithCoder:(NSCoder * _Nonnull)aCoder;
 @end
 
 #if __has_attribute(external_source_symbol)
